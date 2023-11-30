@@ -1,0 +1,13 @@
+steps:
+  - name: maven:3.3-jdk-8
+    entrypoint: mvn
+    args: ['--version']
+  - name: maven:3.3-jdk-8
+    entrypoint: mvn
+    args: ['test']
+  - name: maven:3.3-jdk-8
+    entrypoint: mvn
+    args: ['package','-Dmaven.test.skip=true']
+  - name: gcr.io/cloud-builders/docker
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/iam-example-proyect/demo-hello-gke/demo-hello-gke', '--build-arg=JAR_FILE=target/demo-hello-gke-0.0.1-SNAPSHOT.jar', '.']
+    images: ['us-central1-docker.pkg.dev/iam-example-proyect/demo-hello-gke/demo-hello-gke']
